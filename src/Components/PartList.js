@@ -1,7 +1,15 @@
 import React, { Component } from "react";
 import { observer } from "mobx-react";
 
-import { Container, Spinner, Row } from "react-bootstrap";
+import {
+  Container,
+  Spinner,
+  Row,
+  Button,
+  Modal,
+  InputGroup,
+  FormControl,
+} from "react-bootstrap";
 
 //store
 import masterStore from "../stores/masterStore";
@@ -10,6 +18,23 @@ import masterStore from "../stores/masterStore";
 import PartCard from "./PartCard";
 
 class PartList extends Component {
+  state = {
+    show: false,
+    name: "",
+  };
+
+  handleClose = () => this.setState({ show: false });
+
+  handleShow = () => this.setState({ show: true });
+
+  handleChange = (event) => {
+    this.setState({ name: event.target.value });
+  };
+  handleSubmit = () => {
+    let nameItem = { name: this.state.name };
+    masterStore.addParticipants(nameItem);
+    this.handleClose();
+  };
   render() {
     if (masterStore.loadingPart) {
       return <Spinner animation="border" variant="primary" size="l" />;
@@ -20,6 +45,35 @@ class PartList extends Component {
 
       return (
         <div>
+          {/*   modal ---------------- modal  */}
+          <Modal show={this.state.show} onHide={this.handleClose}>
+            <Modal.Header closeButton>
+              <Modal.Title>Add Participants</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <FormControl
+                as="textarea"
+                aria-label="With textarea"
+                type="text"
+                name="Participants Name"
+                value={this.state.name}
+                onChange={this.handleChange}
+              />
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={this.handleClose}>
+                Close
+              </Button>
+              <Button variant="primary" onClick={this.handleSubmit}>
+                Submit
+              </Button>
+            </Modal.Footer>
+          </Modal>
+          {/*   modal ---------------- modal  */}
+
+          <Button variant="primary" onClick={this.handleShow}>
+            Add Participants
+          </Button>
           <Container fluid>
             <Row>{partList} </Row>
           </Container>

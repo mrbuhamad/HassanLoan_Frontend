@@ -14,6 +14,16 @@ class MasterStore {
       console.error(err);
     }
   };
+  addParticipants = async (data) => {
+    try {
+      console.log(data);
+      const res = await instance.post("participants/create/", data);
+      const participant = res.data;
+      this.participants.push(participant);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 }
 
 decorate(MasterStore, {
