@@ -12,7 +12,7 @@ import {
 } from "react-bootstrap";
 
 //store
-import masterStore from "../stores/masterStore";
+import masterStore from "../../stores/masterStore";
 
 // Components
 import PartCard from "./PartCard";
@@ -40,7 +40,7 @@ class PartList extends Component {
       return <Spinner animation="border" variant="primary" size="l" />;
     } else {
       const partList = masterStore.participants.map((item) => {
-        return <PartCard participants={item} />;
+        return <PartCard participants={item} key={item.id} />;
       });
 
       return (
@@ -71,10 +71,10 @@ class PartList extends Component {
           </Modal>
           {/*   modal ---------------- modal  */}
 
-          <Button variant="primary" onClick={this.handleShow}>
-            Add Participants
-          </Button>
           <Container fluid>
+            <Button variant="primary" onClick={this.handleShow}>
+              إضافة مستفيد
+            </Button>
             <Row>{partList} </Row>
           </Container>
         </div>

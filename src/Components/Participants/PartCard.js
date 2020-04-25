@@ -1,34 +1,44 @@
 import React, { Component } from "react";
 import { observer } from "mobx-react";
+import { Link } from "react-router-dom";
 
 import { Row, Col, Container, Card, Button } from "react-bootstrap";
 
 //store
-
-// "name": "محمد بوحمد",
-//         "part_hold_amount": 350,
-//         "part_profit_amount": 50,
-//         "settled_loans": 0,
-//         "active_loans": 1
+import masterStore from "../../stores/masterStore";
 
 class PartCard extends Component {
   participants = this.props.participants;
+
+  fetchLoans = () => {
+    const id = this.participants.id;
+    masterStore.fetchLoans(id);
+    console.log("it is kind of working");
+  };
   render() {
     return (
       <div>
         <Col>
-          <Card style={{ width: "18rem" }}>
+          <Card border="info" style={{ width: "18rem" }}>
+            <Link
+              to={`/Loans/${this.participants.id}`}
+              onClick={() => this.fetchLoans}
+            >
+              <Card.Header style={{ backgroundColor: "#e3f2fd" }}>
+                {this.participants.name}
+              </Card.Header>
+            </Link>
+
             <Card.Body>
-              <Card.Title>{this.participants.name}</Card.Title>
               <Row>
                 <Col>
                   <Card.Text>
-                    <p>Active Loans {this.participants.active_loans}</p>
+                    Active Loans {this.participants.active_loans}
                   </Card.Text>
                 </Col>
                 <Col>
                   <Card.Text>
-                    <p>settled Loans {this.participants.settled_loans} </p>
+                    settled Loans {this.participants.settled_loans}
                   </Card.Text>
                 </Col>
               </Row>
@@ -36,14 +46,12 @@ class PartCard extends Component {
               <Row>
                 <Col>
                   <Card.Text>
-                    <p>hold amount: {this.participants.part_hold_amount}KD</p>
+                    hold amount: {this.participants.part_hold_amount}KD
                   </Card.Text>
                 </Col>
                 <Col>
                   <Card.Text>
-                    <p>
-                      profit amount: {this.participants.part_profit_amount}KD{" "}
-                    </p>
+                    profit amount: {this.participants.part_profit_amount}KD{" "}
                   </Card.Text>
                 </Col>
               </Row>
