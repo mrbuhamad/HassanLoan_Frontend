@@ -13,7 +13,6 @@ class PartCard extends Component {
   fetchLoans = () => {
     const id = this.participants.id;
     masterStore.fetchLoans(id);
-    console.log("it is kind of working");
   };
   render() {
     return (

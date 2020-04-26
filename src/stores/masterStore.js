@@ -22,10 +22,10 @@ class MasterStore {
   };
   addParticipants = async (data) => {
     try {
-      console.log(data);
       const res = await instance.post("participants/create/", data);
       const participant = res.data;
       this.participants.push(participant);
+      console.log(this.participants);
     } catch (err) {
       console.error(err);
     }
@@ -35,8 +35,19 @@ class MasterStore {
     try {
       const res = await instance.get(`participants/${part_id}/loans/`);
       this.Loans = res.data;
-      console.log(this.Loans);
       this.loadingLoans = false;
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  addLoan = async (data) => {
+    console.log(this.data);
+
+    try {
+      const res = await instance.post("loan/create", data);
+      const Loan = res.data;
+      this.Loans.loans.push(Loan);
     } catch (err) {
       console.error(err);
     }
