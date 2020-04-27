@@ -10,18 +10,20 @@ import {
   Form,
   Row,
   Col,
+  Container,
 } from "react-bootstrap";
 
 //store
 import masterStore from "../../stores/masterStore";
+import pymentsStore from "../../stores/paymentsStore";
 
 //components
 import LoanCard from "./LoanCard";
+import Pyments from "./Pyments";
 
 class PartDetaile extends Component {
   state = {
     show: false,
-
     loan_amount: "",
     hold_amount: "",
     profit_amount: "",
@@ -61,7 +63,6 @@ class PartDetaile extends Component {
       profit_amount: this.state.profit_amount,
       date: this.state.date,
     };
-    console.log(nameloan);
     masterStore.addLoan(nameloan);
     this.handleClose();
   };
@@ -136,30 +137,35 @@ class PartDetaile extends Component {
           </Modal.Footer>
         </Modal>
         {/*   modal ---------------- modal  */}
+        <Container>
+          <Card border="info">
+            <Card.Header
+              style={{
+                backgroundColor: "#e3f2fd",
+                fontSize: "2rem",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              {masterStore.Loans.name}
+            </Card.Header>
+            <Button variant="primary" onClick={this.handleShow}>
+              Add Loan{" "}
+            </Button>
 
-        <Card border="info">
-          <Card.Header
-            style={{
-              backgroundColor: "#e3f2fd",
-              fontSize: "2rem",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            {masterStore.Loans.name}
-          </Card.Header>
-          <Button variant="primary" onClick={this.handleShow}>
-            Add Loan{" "}
-          </Button>
+            <Card.Body>
+              <Row>
+                {masterStore.Loans.loans.map((loan) => {
+                  return <LoanCard key={loan.id} loan={loan} />;
+                })}
+              </Row>
+            </Card.Body>
+          </Card>
 
-          <Card.Body>
-            <Row>
-              {masterStore.Loans.loans.map((loan) => {
-                return <LoanCard key={loan.id} loan={loan} />;
-              })}
-            </Row>
-          </Card.Body>
-        </Card>
+          <Card border="info">
+            <Pyments />
+          </Card>
+        </Container>
       </div>
     );
   }

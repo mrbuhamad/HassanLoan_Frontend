@@ -21,7 +21,7 @@ class PartCard extends Component {
           <Card border="info" style={{ width: "18rem" }}>
             <Link
               to={`/Loans/${this.participants.id}`}
-              onClick={() => this.fetchLoans}
+              onClick={this.fetchLoans}
             >
               <Card.Header style={{ backgroundColor: "#e3f2fd" }}>
                 {this.participants.name}

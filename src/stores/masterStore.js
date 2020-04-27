@@ -4,12 +4,8 @@ import { instance } from "./instance";
 class MasterStore {
   participants = [];
   Loans = [];
-  Hoalds = [];
-  Payments = [];
   loadingPart = true;
   loadingLoans = true;
-  LoandignHold = true;
-  loadingPayments = true;
 
   fetchParticipants = async () => {
     try {
@@ -58,11 +54,7 @@ decorate(MasterStore, {
   participants: observable,
   loadingPart: observable,
   Loans: observable,
-  Hoalds: observable,
-  Payments: observable,
-  LoandignHold: observable,
   loadingLoans: observable,
-  loadingPayments: observable,
 });
 
 const masterStore = new MasterStore();
