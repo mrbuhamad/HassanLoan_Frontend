@@ -20,7 +20,17 @@ class PaymentsStore {
 
   addPayment = async (data) => {
     try {
-      const res = await instance.post("loan/create", data);
+      const res = await instance.post("pyments/create", data);
+      this.payments.push(res.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  deletePyment = async (pyment_id, index) => {
+    try {
+      await instance.delete(`pyments/${pyment_id}/delete`);
+      this.payments.splice(index, 1);
     } catch (err) {
       console.error(err);
     }

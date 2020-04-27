@@ -12,8 +12,8 @@ import PymentsCard from "./PymentsCard";
 
 class Pyments extends Component {
   render() {
-    const pyments = pymentsStore.payments.map((pyment) => {
-      return <PymentsCard pyment={pyment} />;
+    const pyments = pymentsStore.payments.map((pyment, index) => {
+      return <PymentsCard pyment={pyment} index={index} />;
     });
 
     if (pymentsStore.showPayments) {

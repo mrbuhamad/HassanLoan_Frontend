@@ -21,7 +21,6 @@ class MasterStore {
       const res = await instance.post("participants/create/", data);
       const participant = res.data;
       this.participants.push(participant);
-      console.log(this.participants);
     } catch (err) {
       console.error(err);
     }
@@ -38,8 +37,6 @@ class MasterStore {
   };
 
   addLoan = async (data) => {
-    console.log(this.data);
-
     try {
       const res = await instance.post("loan/create", data);
       const Loan = res.data;
