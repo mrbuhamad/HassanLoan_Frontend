@@ -14,7 +14,7 @@ function App() {
     <>
       <Navbar />
       <Switch>
-        <Redirect exact from="/" to="/participants" />
+        <Redirect exact from="/" to="/participants/" />
         <Route path="/participants/" component={PartList} />
         <Route path="/Loans/:partID/" component={PartDetaile} />
       </Switch>
