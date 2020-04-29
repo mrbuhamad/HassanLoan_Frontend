@@ -6,6 +6,7 @@ class MasterStore {
   Loans = [];
   loadingPart = true;
   loadingLoans = true;
+  showLoanModal = false;
 
   fetchParticipants = async () => {
     try {
@@ -45,6 +46,10 @@ class MasterStore {
       console.error(err);
     }
   };
+
+  handleCloseLoan = () => (this.showLoanModal = false);
+
+  handleShowLoan = () => (this.showLoanModal = true);
 }
 
 decorate(MasterStore, {
@@ -52,6 +57,7 @@ decorate(MasterStore, {
   loadingPart: observable,
   Loans: observable,
   loadingLoans: observable,
+  showLoanModal: observable,
 });
 
 const masterStore = new MasterStore();

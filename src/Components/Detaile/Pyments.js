@@ -15,6 +15,7 @@ class Pyments extends Component {
     const pyments = pymentsStore.payments.map((pyment, index) => {
       return <PymentsCard pyment={pyment} index={index} />;
     });
+    console.log(pymentsStore.payments);
 
     if (pymentsStore.showPayments) {
       return masterStore.loadingLoans ? (

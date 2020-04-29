@@ -3,9 +3,7 @@ import { instance } from "./instance";
 
 class PaymentsStore {
   showPayments = false;
-  Hoalds = [];
   payments = [];
-  LoandignHold = true;
   loadingPayments = true;
 
   fetchPayments = async (loan_id) => {
@@ -36,14 +34,12 @@ class PaymentsStore {
     }
   };
   handleShow = () => {
-    this.showPayments = !this.showPayments;
+    this.showPayments = true;
   };
 }
 
 decorate(PaymentsStore, {
-  Hoalds: observable,
   payments: observable,
-  LoandignHold: observable,
   loadingPayments: observable,
   showPayments: observable,
 });
