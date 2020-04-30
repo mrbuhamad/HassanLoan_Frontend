@@ -22,7 +22,7 @@ import Holds from "../Holds/Holds";
 
 // Modals
 import LoanModal from "../Modal/LoanModal";
-import holdModal from "../Modal/holdModal";
+import HoldModal from "../Modal/HoldModal";
 
 class PartDetaile extends Component {
   participants = this.props.participants;
@@ -47,10 +47,12 @@ class PartDetaile extends Component {
     return (
       <div>
         {/*   modal ---------------- modal  */}
+
         <LoanModal partID={this.partID} />
-        <holdModal partID={this.partID} />
+        <HoldModal partID={this.partID} />
 
         {/*   modal ---------------- modal  */}
+
         <Container>
           <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
             {/* ---------------- Home tab------------------ */}
@@ -97,9 +99,24 @@ class PartDetaile extends Component {
                 >
                   {masterStore.Loans.name}
                 </Card.Header>
-                <Button variant="primary" onClick={holdStore.handleShowHold}>
-                  Add Hold
-                </Button>
+                <Card.Body>
+                  <Row>
+                    <Button
+                      variant="primary"
+                      onClick={holdStore.handleShowHoldAdd}
+                      style={{ flex: 1 }}
+                    >
+                      Add Hold
+                    </Button>
+                    <Button
+                      variant="danger"
+                      onClick={holdStore.handleShowHoldWd}
+                      style={{ flex: 1 }}
+                    >
+                      wethdrow Hold
+                    </Button>
+                  </Row>
+                </Card.Body>
               </Card>
 
               <Card border="info">

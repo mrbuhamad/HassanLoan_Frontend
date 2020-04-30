@@ -1,23 +1,12 @@
 import React, { Component } from "react";
 import { observer } from "mobx-react";
 
-import {
-  Modal,
-  Spinner,
-  Card,
-  Button,
-  FormControl,
-  Form,
-  Row,
-  Col,
-  Container,
-} from "react-bootstrap";
+import { Modal, Button, FormControl, Form, Row, Col } from "react-bootstrap";
 
 //store
-import masterStore from "../../stores/masterStore";
-import pymentsStore from "../../stores/paymentsStore";
+import holdStore from "../../stores/holdStore";
 
-class holdModal extends Component {
+class HoldModal extends Component {
   state = {
     part_hold_amount: "",
     reasoning: "",
@@ -29,30 +18,25 @@ class holdModal extends Component {
   handleChangeamount = (event) => {
     this.setState({ part_hold_amount: event.target.value });
   };
-  handleChangehold = (event) => {
-    this.setState({ hold_amount: event.target.value });
-  };
+
   handleChangedate = (event) => {
     this.setState({ date: event.target.value });
   };
 
   handleSubmit = () => {
-    let nameloan = {
+    let holdObj = {
       participant: this.partID,
       part_hold_amount: this.state.part_hold_amount,
-      hold_amount: this.state.hold_amount,
+      reasoning: holdStore.reasoning,
       date: this.state.date,
     };
-    masterStore.addLoan(nameloan);
-    masterStore.handleCloseLoan();
+    holdStore.addHold(holdObj);
+    holdStore.handleCloseHold();
   };
 
   render() {
     return (
-      <Modal
-        show={masterStore.showholdModal}
-        onHide={masterStore.handleCloseLoan}
-      >
+      <Modal show={holdStore.showHoldModal} onHide={holdStore.handleCloseHold}>
         <Modal.Header closeButton>
           <Modal.Title>Add Hold</Modal.Title>
         </Modal.Header>
@@ -66,18 +50,6 @@ class holdModal extends Component {
                 placeholder="part_hold_amount"
                 value={this.state.part_hold_amount}
                 onChange={this.handleChangeamount}
-              />
-            </Col>
-          </Form.Group>
-          <Form.Group as={Row} controlId="formHorizontalEmail">
-            <Form.Label column sm={3}>
-              hold_amount
-            </Form.Label>
-            <Col sm={8}>
-              <Form.Control
-                placeholder="hold_amount"
-                value={this.state.hold_amount}
-                onChange={this.handleChangehold}
               />
             </Col>
           </Form.Group>
@@ -97,7 +69,7 @@ class holdModal extends Component {
           </Form.Group>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={masterStore.handleCloseLoan}>
+          <Button variant="secondary" onClick={holdStore.handleCloseHold}>
             Close
           </Button>
           <Button variant="primary" onClick={this.handleSubmit}>
@@ -109,4 +81,4 @@ class holdModal extends Component {
   }
 }
 
-export default observer(holdModal);
+export default observer(HoldModal);

@@ -5,6 +5,7 @@ class HoldStore {
   Hoalds = [];
   LoandignHold = true;
   showHoldModal = false;
+  reasoning = "";
 
   fetchHolds = async (part_id) => {
     try {
@@ -26,10 +27,19 @@ class HoldStore {
     }
   };
 
-  deleteHold = async (pyment_id, index) => {
+  addHoldFLoan = (hold) => {
+    delete hold.participant;
+    delete hold.loan_amount;
+    delete hold.profit_amount;
+    hold.reasoning = "throu loan";
+    hold["part_hold_amount"] = hold["hold_amount"];
+    this.Hoalds.push(hold);
+  };
+
+  deleteHold = async (hold_id, index) => {
     try {
-      await instance.delete(`pyments/${pyment_id}/delete`);
-      this.payments.splice(index, 1);
+      await instance.delete(`hold/${hold_id}/delete`);
+      this.Hoalds.splice(index, 1);
     } catch (err) {
       console.error(err);
     }
@@ -37,13 +47,22 @@ class HoldStore {
 
   handleCloseHold = () => (this.showHoldModal = false);
 
-  handleShowHold = () => (this.showHoldModal = true);
+  handleShowHoldAdd = () => {
+    this.showHoldModal = true;
+    this.reasoning = "capital increase";
+  };
+
+  handleShowHoldWd = () => {
+    this.showHoldModal = true;
+    this.reasoning = "capital withdraw";
+  };
 }
 
 decorate(HoldStore, {
   Hoalds: observable,
   LoandignHold: observable,
   showHoldModal: observable,
+  reasoning: observable,
 });
 
 const holdStore = new HoldStore();
