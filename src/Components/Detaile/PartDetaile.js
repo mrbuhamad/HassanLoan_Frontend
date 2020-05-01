@@ -21,7 +21,7 @@ import Pyments from "./Pyments";
 import Holds from "../Holds/Holds";
 
 // Modals
-import LoanModal from "../Modal/LoanModal";
+// import LoanModal from "../Modal/LoanModal";
 import HoldModal from "../Modal/HoldModal";
 
 class PartDetaile extends Component {
@@ -45,7 +45,8 @@ class PartDetaile extends Component {
     if (holdStore.showHoldModal) {
       return <HoldModal partID={this.partID} />;
     } else {
-      return <LoanModal partID={this.partID} />;
+      // return <LoanModal partID={this.partID} />;
+      return null;
     }
   };
 
