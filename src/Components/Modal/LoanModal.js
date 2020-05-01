@@ -1,11 +1,21 @@
 import React, { Component } from "react";
 import { observer } from "mobx-react";
 
-import { Modal, Button, FormControl, Form, Row, Col } from "react-bootstrap";
+import {
+  Modal,
+  Spinner,
+  Card,
+  Button,
+  FormControl,
+  Form,
+  Row,
+  Col,
+  Container,
+} from "react-bootstrap";
 
 //store
 import masterStore from "../../stores/masterStore";
-import holdStore from "../../stores/holdStore";
+import pymentsStore from "../../stores/paymentsStore";
 
 class LoanModal extends Component {
   state = {
@@ -39,7 +49,6 @@ class LoanModal extends Component {
       date: this.state.date,
     };
     masterStore.addLoan(nameloan);
-    holdStore.addHoldFLoan(nameloan);
     masterStore.handleCloseLoan();
   };
 
@@ -113,7 +122,6 @@ class LoanModal extends Component {
       </Modal>
     );
   }
-  // -
 }
 
 export default observer(LoanModal);
