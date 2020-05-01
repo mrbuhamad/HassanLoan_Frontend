@@ -22,7 +22,7 @@ import Holds from "../Holds/Holds";
 
 // Modals
 import LoanModal from "../Modal/LoanModal";
-import HoldModal from "../Modal/HoldModal";
+import holdModal from "../Modal/holdModal";
 
 class PartDetaile extends Component {
   participants = this.props.participants;
@@ -35,7 +35,7 @@ class PartDetaile extends Component {
 
   loanCards = () => {
     if (masterStore.loadingLoans) {
-      return null;
+      return <Spinner animation="border" variant="primary" size="3" />;
     } else {
       return masterStore.Loans.loans.map((loan) => {
         return <LoanCard key={loan.id} loan={loan} />;
@@ -47,12 +47,10 @@ class PartDetaile extends Component {
     return (
       <div>
         {/*   modal ---------------- modal  */}
-
         <LoanModal partID={this.partID} />
-        <HoldModal partID={this.partID} />
+        <holdModal partID={this.partID} />
 
         {/*   modal ---------------- modal  */}
-
         <Container>
           <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
             {/* ---------------- Home tab------------------ */}
@@ -99,24 +97,9 @@ class PartDetaile extends Component {
                 >
                   {masterStore.Loans.name}
                 </Card.Header>
-                <Card.Body>
-                  <Row>
-                    <Button
-                      variant="primary"
-                      onClick={holdStore.handleShowHoldAdd}
-                      style={{ flex: 1 }}
-                    >
-                      Add Hold
-                    </Button>
-                    <Button
-                      variant="danger"
-                      onClick={holdStore.handleShowHoldWd}
-                      style={{ flex: 1 }}
-                    >
-                      wethdrow Hold
-                    </Button>
-                  </Row>
-                </Card.Body>
+                <Button variant="primary" onClick={holdStore.handleShowHold}>
+                  Add Hold
+                </Button>
               </Card>
 
               <Card border="info">
