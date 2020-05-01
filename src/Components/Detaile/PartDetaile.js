@@ -45,7 +45,7 @@ class PartDetaile extends Component {
     if (holdStore.showHoldModal) {
       return <HoldModaal partID={this.partID} />;
     } else {
-      return <LoanModal partID={1} />;
+      return <LoanModal partID={this.partID} />;
     }
   };
 
