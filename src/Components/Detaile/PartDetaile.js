@@ -22,7 +22,7 @@ import Holds from "../Holds/Holds";
 
 // Modals
 import LoanModal from "../Modal/LoanModal";
-// import HoldModal from "../Modal/HoldModal";
+import HoldModal from "../Modal/HoldModal";
 
 class PartDetaile extends Component {
   participants = this.props.participants;
@@ -34,12 +34,18 @@ class PartDetaile extends Component {
   }
 
   loanCards = () => {
-    if (masterStore.loadingLoans) {
-      return <Spinner animation="border" variant="primary" size="3" />;
-    } else {
+    if (!masterStore.loadingLoans) {
       return masterStore.Loans.loans.map((loan) => {
         return <LoanCard key={loan.id} loan={loan} />;
       });
+    }
+  };
+
+  choosemodal = () => {
+    if (holdStore.showHoldModal) {
+      return <HoldModal partID={this.partID} />;
+    } else {
+      return <LoanModal partID={this.partID} />;
     }
   };
 
@@ -48,8 +54,7 @@ class PartDetaile extends Component {
       <div>
         {/*   modal ---------------- modal  */}
 
-        <LoanModal partID={this.partID} />
-        {/* <HoldModal partID={this.partID} /> */}
+        {this.choosemodal()}
 
         {/*   modal ---------------- modal  */}
 
@@ -72,7 +77,7 @@ class PartDetaile extends Component {
                   {masterStore.Loans.name}
                 </Card.Header>
                 <Button variant="primary" onClick={masterStore.handleShowLoan}>
-                  Add Loan{" "}
+                  Add Loan
                 </Button>
 
                 <Card.Body>
