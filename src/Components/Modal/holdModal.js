@@ -7,32 +7,32 @@ import { Modal, Button, FormControl, Form, Row, Col } from "react-bootstrap";
 import holdStore from "../../stores/holdStore";
 
 class HoldModal extends Component {
-  state = {
-    part_hold_amount: "",
-    reasoning: "",
-    date: "",
-  };
+  // state = {
+  //   part_hold_amount: "",
+  //   reasoning: "",
+  //   date: "",
+  // };
 
-  partID = this.props.partID;
+  // partID = this.props.partID;
 
-  handleChangeamount = (event) => {
-    this.setState({ part_hold_amount: event.target.value });
-  };
+  // handleChangeamount = (event) => {
+  //   this.setState({ part_hold_amount: event.target.value });
+  // };
 
-  handleChangedate = (event) => {
-    this.setState({ date: event.target.value });
-  };
+  // handleChangedate = (event) => {
+  //   this.setState({ date: event.target.value });
+  // };
 
-  handleSubmit = () => {
-    let holdObj = {
-      participant: this.partID,
-      part_hold_amount: this.state.part_hold_amount,
-      reasoning: holdStore.reasoning,
-      date: this.state.date,
-    };
-    holdStore.addHold(holdObj);
-    holdStore.handleCloseHold();
-  };
+  // handleSubmit = () => {
+  //   let holdObj = {
+  //     participant: this.partID,
+  //     part_hold_amount: this.state.part_hold_amount,
+  //     reasoning: holdStore.reasoning,
+  //     date: this.state.date,
+  //   };
+  //   holdStore.addHold(holdObj);
+  //   holdStore.handleCloseHold();
+  // };
 
   render() {
     return (
