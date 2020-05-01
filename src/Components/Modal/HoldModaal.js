@@ -6,7 +6,7 @@ import { observer } from "mobx-react";
 // //store
 // import holdStore from "../../stores/holdStore";
 
-class HoldModal extends Component {
+class HoldModaal extends Component {
   // state = {
   //   part_hold_amount: "",
   //   reasoning: "",
@@ -84,4 +84,4 @@ class HoldModal extends Component {
   }
 }
 
-export default observer(HoldModal);
+export default observer(HoldModaal);
