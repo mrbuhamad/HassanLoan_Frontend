@@ -22,7 +22,7 @@ import Holds from "../Holds/Holds";
 
 // Modals
 import LoanModal from "../Modal/LoanModal";
-import HoldModal from "../Modal/HoldModal";
+// import HoldModal from "../Modal/HoldModal";
 
 class PartDetaile extends Component {
   participants = this.props.participants;
@@ -43,7 +43,8 @@ class PartDetaile extends Component {
 
   choosemodal = () => {
     if (holdStore.showHoldModal) {
-      return <HoldModal partID={this.partID} />;
+      // return <HoldModal partID={this.partID} />;
+      return null;
     } else {
       return <LoanModal partID={this.partID} />;
     }
