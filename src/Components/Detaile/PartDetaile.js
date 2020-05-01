@@ -22,7 +22,7 @@ import Holds from "../Holds/Holds";
 
 // Modals
 import LoanModal from "../Modal/LoanModal";
-import HoldModal from "../Modal/HoldModal";
+// import HoldModal from "../Modal/HoldModal";
 
 class PartDetaile extends Component {
   participants = this.props.participants;
@@ -48,7 +48,7 @@ class PartDetaile extends Component {
       <div>
         {/*   modal ---------------- modal  */}
         <LoanModal partID={this.partID} />
-        <HoldModal partID={this.partID} />
+        {/* <HoldModal partID={this.partID} /> */}
 
         {/*   modal ---------------- modal  */}
         <Container>
