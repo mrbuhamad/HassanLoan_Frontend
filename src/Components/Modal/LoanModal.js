@@ -113,6 +113,7 @@ class LoanModal extends Component {
       </Modal>
     );
   }
+  // -
 }
 
 export default observer(LoanModal);
