@@ -2,10 +2,10 @@ import React, { Component } from "react";
 import { observer } from "mobx-react";
 import { TrashFill } from "react-bootstrap-icons";
 
-import { Button, Spinner, Modal } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 
 //store
-import pymentsStore from "../../stores/paymentsStore";
+import holdStore from "../../stores/holdStore";
 
 class HoldCard extends Component {
   state = {
@@ -17,7 +17,7 @@ class HoldCard extends Component {
   handleShow = () => this.setState({ show: true });
 
   handleSubmit = () => {
-    pymentsStore.deletePyment(this.props.pyment.id, this.props.index);
+    holdStore.deleteHold(this.props.hold.id, this.props.index);
     this.handleClose();
   };
 
