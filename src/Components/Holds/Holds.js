@@ -15,26 +15,30 @@ class Holds extends Component {
       return <Spinner animation="border" variant="primary" size="3" />;
     } else {
       return holdStore.Hoalds.map((hold, index) => {
-        return <HoldCard hold={hold} index={index} />;
+        return <HoldCard hold={hold} index={index} key={hold.id} />;
       });
     }
   };
 
   render() {
-    return (
-      <Table responsive>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Pyment date</th>
-            <th>Pyment Amount</th>
-            <th>As</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>{this.holdCards()}</tbody>
-      </Table>
-    );
+    if (holdStore.LoandignHold) {
+      return <Spinner animation="border" variant="primary" size="3" />;
+    } else {
+      return (
+        <Table responsive>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Pyment date</th>
+              <th>Pyment Amount</th>
+              <th>As</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>{this.holdCards()}</tbody>
+        </Table>
+      );
+    }
   }
 }
 export default observer(Holds);

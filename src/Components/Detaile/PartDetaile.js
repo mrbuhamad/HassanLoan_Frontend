@@ -35,7 +35,7 @@ class PartDetaile extends Component {
 
   loanCards = () => {
     if (masterStore.loadingLoans) {
-      return <Spinner animation="border" variant="primary" size="3" />;
+      return null;
     } else {
       return masterStore.Loans.loans.map((loan) => {
         return <LoanCard key={loan.id} loan={loan} />;
