@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { observer } from "mobx-react";
 
-import { Modal, Button, FormControl, Form, Row, Col } from "react-bootstrap";
+// import { Modal, Button, FormControl, Form, Row, Col } from "react-bootstrap";
 
-//store
-import holdStore from "../../stores/holdStore";
+// //store
+// import holdStore from "../../stores/holdStore";
 
 class HoldModal extends Component {
   // state = {
@@ -77,7 +77,9 @@ class HoldModal extends Component {
       //     </Button>
       //   </Modal.Footer>
       // </Modal>
-      <div>hi</div>
+      <Container>
+        <Text>hi</Text>
+      </Container>
     );
   }
 }
