@@ -38,9 +38,12 @@ class MasterStore {
   };
 
   addLoan = async (data) => {
+    console.log("add loan row data", data);
     try {
       const res = await instance.post("loan/create", data);
       const Loan = res.data;
+      console.log("add loan post post data", Loan);
+
       this.Loans.loans.push(Loan);
     } catch (err) {
       console.error(err);

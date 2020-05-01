@@ -28,12 +28,12 @@ class HoldStore {
   };
 
   addHoldFLoan = (hold) => {
-    delete hold.participant;
-    delete hold.loan_amount;
-    delete hold.profit_amount;
-    hold.reasoning = "throu loan";
-    hold["part_hold_amount"] = hold["hold_amount"];
-    this.Hoalds.push(hold);
+    const loanHold = {
+      part_hold_amoun: hold.hold_amount,
+      reasoning: "throu loan",
+      date: hold.data,
+    };
+    this.Hoalds.push(loanHold);
   };
 
   deleteHold = async (hold_id, index) => {
