@@ -4,6 +4,7 @@ import { instance } from "./instance";
 class MasterStore {
   participants = [];
   Loans = [];
+  partObj={}
   loadingPart = true;
   loadingLoans = true;
   showLoanModal = false;
@@ -26,6 +27,10 @@ class MasterStore {
       console.error(err);
     }
   };
+  
+  specifyPart =(id)=>{
+   this.partObj= this.participants.find(obj =>obj.id===id)
+  }
 
   fetchLoans = async (part_id) => {
     try {

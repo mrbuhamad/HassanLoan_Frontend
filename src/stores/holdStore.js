@@ -12,7 +12,6 @@ class HoldStore {
       const res = await instance.get(`participants/${part_id}/hold/`);
       this.Hoalds = res.data.hold_amounts;
       this.LoandignHold = false;
-      console.log("Hoalds", res.data);
     } catch (err) {
       console.error(err);
     }

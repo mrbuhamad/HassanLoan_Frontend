@@ -10,9 +10,10 @@ import masterStore from "../../stores/masterStore";
 class PartCard extends Component {
   participants = this.props.participants;
 
-  fetchLoans = () => {
+  fetchdata = () => {
     const id = this.participants.id;
     masterStore.fetchLoans(id);
+    masterStore.specifyPart(id)
   };
   render() {
     return (
@@ -21,7 +22,7 @@ class PartCard extends Component {
           <Card border="info" style={{ width: "18rem" }}>
             <Link
               to={`/Loans/${this.participants.id}`}
-              onClick={this.fetchLoans}
+              onClick={this.fetchdata}
             >
               <Card.Header style={{ backgroundColor: "#e3f2fd" }}>
                 {this.participants.name}
