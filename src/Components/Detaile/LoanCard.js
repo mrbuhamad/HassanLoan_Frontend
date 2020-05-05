@@ -136,6 +136,8 @@ class LoanCard extends Component {
 
                 <Card.Text>paid_amount {this.loan.paid_amount} KD</Card.Text>
 
+                <Card.Text>status  {this.loan.status} </Card.Text>
+
                 <Button variant="primary" onClick={this.handleShowModal}>
                   Add Pyment
                 </Button>

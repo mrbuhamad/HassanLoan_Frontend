@@ -51,7 +51,7 @@ class PartCard extends Component {
                 </Col>
                 <Col>
                   <Card.Text>
-                    profit amount: {this.participants.part_profit_amount}KD{" "}
+                    profit amount: {this.participants.part_profit_amount}KD
                   </Card.Text>
                 </Col>
               </Row>
