@@ -16,7 +16,6 @@ import masterStore from "../../stores/masterStore";
 import holdStore from "../../stores/holdStore";
 
 //components
-import PartCard from "../Participants/PartCard"
 import LoanCard from "./LoanCard";
 import Pyments from "./Pyments";
 import Holds from "../Holds/Holds";
