@@ -123,7 +123,7 @@ class LoanCard extends Component {
               </Card.Header>
               <Card.Body>
                 <Card.Title>
-                  {this.loan.paid_amount} kd / {this.loan.loan_amount} KD
+                  {this.loan.paid_amount} kd / {this.loan.totla_loan_amount} KD
                 </Card.Title>
                 <ProgressBar animated now={this.state.prograss} />
 
