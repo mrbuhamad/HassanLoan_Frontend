@@ -39,7 +39,7 @@ class PartList extends Component {
     if (masterStore.loadingPart) {
       return <Spinner animation="border" variant="primary" size="l" />;
     } else {
-      const partList = masterStore.participants.map((item) => {
+      const partList = masterStore.participantsList.map((item) => {
         return <PartCard participants={item} key={item.id} />;
       });
 

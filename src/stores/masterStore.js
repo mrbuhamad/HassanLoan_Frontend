@@ -1,4 +1,4 @@
-import { decorate, observable } from "mobx";
+import { decorate, observable ,computed} from "mobx";
 import { instance } from "./instance";
 
 class MasterStore {
@@ -58,6 +58,12 @@ class MasterStore {
   handleCloseLoan = () => (this.showLoanModal = false);
 
   handleShowLoan = () => (this.showLoanModal = true);
+
+   
+  get participantsList() {
+    return this.participants.sort((a, b) => b.active_loans - a.active_loans)
+  }
+
 }
 
 decorate(MasterStore, {
@@ -66,6 +72,7 @@ decorate(MasterStore, {
   Loans: observable,
   loadingLoans: observable,
   showLoanModal: observable,
+  participantsList:computed 
 });
 
 const masterStore = new MasterStore();

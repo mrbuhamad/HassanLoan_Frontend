@@ -11,6 +11,7 @@ import style from "../style"
 
 class PartCard extends Component {
   participants = this.props.participants;
+  
 
   fetchdata = () => {
     const id = this.participants.id;
@@ -20,6 +21,11 @@ class PartCard extends Component {
 
   style=()=> {if(this.participants.error){return "danger" }else{return "info"}}
 
+  styleHeader=()=>{
+    if(this.participants.error){return "#FADBD8"}
+    else if(this.participants.active_loans===0){return "#CCD1D1"}
+    else{ return "#e3f2fd"}}
+   
   render() {
     return (
       <div>
@@ -29,7 +35,7 @@ class PartCard extends Component {
               to={`/Loans/${this.participants.id}`}
               onClick={this.fetchdata}
             >
-              <Card.Header style={{ backgroundColor:(this.participants.error)? " #FADBD8":"#e3f2fd" }} text={this.style()}>
+              <Card.Header style={{ backgroundColor: this.styleHeader()}} text={this.style()}>
                 {this.participants.name}
                 {(this.participants.error)? " Error":"" }
               </Card.Header>
