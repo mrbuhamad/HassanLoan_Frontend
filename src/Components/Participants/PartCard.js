@@ -19,27 +19,32 @@ class PartCard extends Component {
     masterStore.specifyPart(id)
   };
 
-  style=()=> {if(this.participants.error){return "danger" }else{return "info"}}
+  style=()=> {if(this.participants.error){return "danger" }
+  else if(this.participants.active_loans===0){return "dark"}
+  else{return "primary"}}
 
   styleHeader=()=>{
     if(this.participants.error){return "#FADBD8"}
     else if(this.participants.active_loans===0){return "#CCD1D1"}
     else{ return "#e3f2fd"}}
+
+    styletext=()=> {
+      if(this.participants.error){return "danger" }else{return "dark"}}
    
   render() {
     return (
       <div>
         <Col>
-          <Card border={this.style()} text={this.style()} className="text-center" style={style.activPart}>
             <Link
               to={`/Loans/${this.participants.id}`}
+              style={{ textDecoration: 'none' }}
               onClick={this.fetchdata}
             >
-              <Card.Header style={{ backgroundColor: this.styleHeader()}} text={this.style()}>
+          <Card border={this.style()} text={this.styletext()} className="text-center" style={style.activPart}>
+              <Card.Header style={{ backgroundColor: this.styleHeader()}} >
                 {this.participants.name}
                 {(this.participants.error)? " Error":"" }
               </Card.Header>
-            </Link>
 
             <Card.Body>
               <Row>
@@ -71,6 +76,7 @@ class PartCard extends Component {
               <Button variant="primary">Add Loan </Button>
             </Card.Body>
           </Card>
+            </Link>
         </Col>
       </div>
     );

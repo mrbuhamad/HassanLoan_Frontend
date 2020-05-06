@@ -17,6 +17,9 @@ import {
 import masterStore from "../../stores/masterStore";
 import pymentsStore from "../../stores/paymentsStore";
 
+import style from "../style"
+
+
 class LoanCard extends Component {
   state = {
     show: false,
@@ -61,6 +64,25 @@ class LoanCard extends Component {
     });
     this.handleClose();
   };
+
+  getstatus=()=>(this.loan.status==="error paid_amount more than totla_loan_amount ")?
+  ("Error: Loan over payed"):(`Status: ${this.loan.status}`)
+
+  style=()=> {if(this.loan.status=="Active"){return "primary" }
+  else if(this.loan.status=="Settled"){return "dark"}
+  else{ return "danger"}}
+
+  styletext=()=> {
+  if(this.loan.status=="Settled"||this.loan.status=="Active"){return "dark"}
+  else{ return "danger"}}
+
+  styleHeader=()=>
+    {if(this.loan.status=="Active"){return "#e3f2fd" }
+  else if(this.loan.status=="Settled"){return "#CCD1D1"}
+  else{ return "#FADBD8"}}
+
+    
+   
 
   render() {
     return masterStore.loadingLoans ? (
@@ -115,8 +137,8 @@ class LoanCard extends Component {
             onClick={this.handleShow}
             style={{ padding: 0, border: "none", background: "none" }}
           >
-            <Card border="info" style={{ width: "18rem" }}>
-              <Card.Header style={{ backgroundColor: "#e3f2fd" }}>
+            <Card  border={this.style()} text={this.styletext()} className="text-center" style={style.activPart}>
+              <Card.Header style={{ backgroundColor: this.styleHeader()}}>
                 <h5>
                   Loan # 0{this.loan.id} {" -- "}({this.loan.loan_amount} KD)
                 </h5>
@@ -125,7 +147,7 @@ class LoanCard extends Component {
                 <Card.Title>
                   {this.loan.paid_amount} kd / {this.loan.totla_loan_amount} KD
                 </Card.Title>
-                <ProgressBar animated now={this.state.prograss} />
+                <ProgressBar animated variant={this.style()} now={this.state.prograss} />
 
                 <Card.Text>start date: {this.loan.date}</Card.Text>
                 <Card.Text>hold_amount {this.loan.hold_amount} KD</Card.Text>
@@ -136,9 +158,9 @@ class LoanCard extends Component {
 
                 <Card.Text>paid_amount {this.loan.paid_amount} KD</Card.Text>
 
-                <Card.Text>status  {this.loan.status} </Card.Text>
+                <Card.Text>{this.getstatus()} </Card.Text>
 
-                <Button variant="primary" onClick={this.handleShowModal}>
+                <Button variant={this.style()} onClick={this.handleShowModal}>
                   Add Pyment
                 </Button>
               </Card.Body>
