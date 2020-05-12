@@ -1,174 +1,157 @@
 import React, { Component } from "react";
 import { observer } from "mobx-react";
 
-import {
-  Col,
-  Spinner,
-  Card,
-  ProgressBar,
-  Button,
-  Modal,
-  Form,
-  Row,
-  FormControl,
-} from "react-bootstrap";
+import { Col, Spinner, Card, ProgressBar, Button } from "react-bootstrap";
 
 //store
 import masterStore from "../../stores/masterStore";
 import pymentsStore from "../../stores/paymentsStore";
 
-import style from "../style"
+// component
+import UpdateLoanCard from "./UpdateLoanCard";
+import PymentModal from "../Modal/PymentModal";
 
+import style from "../style";
 
 class LoanCard extends Component {
   state = {
     show: false,
-    pyment: "",
-    date: "",
     prograss:
       (this.props.loan.paid_amount / this.props.loan.totla_loan_amount) * 100,
   };
 
-  participants = this.props.participants;
+  participants = masterStore.partObj;
   loan = this.props.loan;
 
   handleClose = () => this.setState({ show: false });
 
   handleShowModal = () => this.setState({ show: true });
 
-  handleChangeamount = (event) => {
-    this.setState({ pyment: event.target.value });
-  };
-
-  handleChangedate = (event) => {
-    this.setState({ date: event.target.value });
-  };
-
   handleShow = () => {
     pymentsStore.fetchPayments(this.loan.id);
     pymentsStore.handleShow();
   };
 
-  addPayment = () => {
-    const pyment = {
-      loan: this.loan.id,
-      pyment: this.state.pyment,
-      date: this.state.date,
-    };
-    pymentsStore.addPayment(pyment);
-    let newPaidAmount =
-      Number(this.props.loan.paid_amount) + Number(this.state.pyment);
-    console.log(newPaidAmount);
+  setprogress = (prograss) =>
     this.setState({
-      prograss: (newPaidAmount / this.props.loan.totla_loan_amount) * 100,
+      prograss: prograss,
     });
-    this.handleClose();
+
+  getstatus = () =>
+    this.loan.status === "error paid_amount more than totla_loan_amount "
+      ? "Error: Loan over payed"
+      : `Status: ${this.loan.status}`;
+
+  style = () => {
+    if (this.loan.status === "Active") {
+      return "primary";
+    } else if (this.loan.status === "Settled") {
+      return "dark";
+    } else {
+      return "danger";
+    }
   };
 
-  getstatus=()=>(this.loan.status==="error paid_amount more than totla_loan_amount ")?
-  ("Error: Loan over payed"):(`Status: ${this.loan.status}`)
+  styletext = () => {
+    if (this.loan.status === "Settled" || this.loan.status === "Active") {
+      return "dark";
+    } else {
+      return "danger";
+    }
+  };
 
-  style=()=> {if(this.loan.status=="Active"){return "primary" }
-  else if(this.loan.status=="Settled"){return "dark"}
-  else{ return "danger"}}
-
-  styletext=()=> {
-  if(this.loan.status=="Settled"||this.loan.status=="Active"){return "dark"}
-  else{ return "danger"}}
-
-  styleHeader=()=>
-    {if(this.loan.status=="Active"){return "#e3f2fd" }
-  else if(this.loan.status=="Settled"){return "#CCD1D1"}
-  else{ return "#FADBD8"}}
-
-    
-   
+  styleHeader = () => {
+    if (this.loan.status === "Active") {
+      return "#e3f2fd";
+    } else if (this.loan.status === "Settled") {
+      return "#CCD1D1";
+    } else {
+      return "#FADBD8";
+    }
+  };
+  handleShowUpdate = () => {
+    masterStore.specifyPart(this.participants.id);
+    pymentsStore.handleShowUpdate(this.loan);
+  };
 
   render() {
-    return masterStore.loadingLoans ? (
-      <Spinner animation="border" variant="primary" size="l" />
-    ) : (
-      <div>
-        {/*   modal ---------------- modal  */}
-        <Modal show={this.state.show} onHide={this.handleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>Add pyment</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <Form.Group as={Row} controlId="formHorizontalEmail">
-              <Form.Label column sm={3}>
-                Pyment
-              </Form.Label>
-              <Col sm={8}>
-                <FormControl
-                  placeholder="loan_amount"
-                  value={this.state.loan_amount}
-                  onChange={this.handleChangeamount}
-                />
-              </Col>
-            </Form.Group>
-            <Form.Group as={Row} controlId="formHorizontalEmail">
-              <Form.Label column sm={3}>
-                date
-              </Form.Label>
-              <Col sm={8}>
-                <Form.Control
-                  type="date"
-                  placeholder="date"
-                  value={this.state.date}
-                  onChange={this.handleChangedate}
-                />
-              </Col>
-            </Form.Group>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={this.handleClose}>
-              Close
-            </Button>
-            <Button variant="primary" onClick={this.addPayment}>
-              Submit
-            </Button>
-          </Modal.Footer>
-        </Modal>
-        {/*   modal ---------------- modal  */}
+    if (masterStore.loadingLoans) {
+      return <Spinner animation="border" variant="primary" size="l" />;
+    } else if (
+      pymentsStore.showUpdateCard &&
+      pymentsStore.editLoanId === this.loan
+    ) {
+      return (
+        <UpdateLoanCard
+          loan={this.loan}
+          participants={this.props.participants}
+        />
+      );
+    } else {
+      return (
+        <div>
+          {/*   modal ---------------- modal  */}
+          {/* <PymentModal loan={this.loan} /> */}
+          <PymentModal setprogress={this.setprogress} loan={this.loan} />
+          {/*   modal ---------------- modal  */}
 
-        <Col>
-          <button
-            onClick={this.handleShow}
-            style={{ padding: 0, border: "none", background: "none" }}
-          >
-            <Card  border={this.style()} text={this.styletext()} className="text-center" style={style.activPart}>
-              <Card.Header style={{ backgroundColor: this.styleHeader()}}>
-                <h5>
-                  Loan # 0{this.loan.id} {" -- "}({this.loan.loan_amount} KD)
-                </h5>
-              </Card.Header>
-              <Card.Body>
-                <Card.Title>
-                  {this.loan.paid_amount} kd / {this.loan.totla_loan_amount} KD
-                </Card.Title>
-                <ProgressBar animated variant={this.style()} now={this.state.prograss} />
+          <Col>
+            <button
+              onClick={this.handleShow}
+              style={{ padding: 0, border: "none", background: "none" }}
+            >
+              <Card
+                border={this.style()}
+                text={this.styletext()}
+                className="text-center"
+                style={style.activPart}
+              >
+                <Card.Header style={{ backgroundColor: this.styleHeader() }}>
+                  <h5>
+                    Loan # 0{this.loan.id} {" -- "}({this.loan.loan_amount} KD)
+                  </h5>
+                </Card.Header>
+                <Card.Body>
+                  <Card.Title>
+                    {this.loan.paid_amount} kd / {this.loan.totla_loan_amount}{" "}
+                    KD
+                  </Card.Title>
+                  <ProgressBar
+                    animated
+                    variant={this.style()}
+                    now={this.state.prograss}
+                  />
 
-                <Card.Text>start date: {this.loan.date}</Card.Text>
-                <Card.Text>hold_amount {this.loan.hold_amount} KD</Card.Text>
+                  <Card.Text>start date: {this.loan.date}</Card.Text>
+                  <Card.Text>hold_amount {this.loan.hold_amount} KD</Card.Text>
 
-                <Card.Text>
-                  profit_amount {this.loan.profit_amount} KD
-                </Card.Text>
+                  <Card.Text>
+                    profit_amount {this.loan.profit_amount} KD
+                  </Card.Text>
 
-                <Card.Text>paid_amount {this.loan.paid_amount} KD</Card.Text>
+                  <Card.Text>paid_amount {this.loan.paid_amount} KD</Card.Text>
 
-                <Card.Text>{this.getstatus()} </Card.Text>
+                  <Card.Text>{this.getstatus()} </Card.Text>
 
-                <Button variant={this.style()} onClick={this.handleShowModal}>
-                  Add Pyment
-                </Button>
-              </Card.Body>
-            </Card>
-          </button>
-        </Col>
-      </div>
-    );
+                  <Button
+                    variant={this.style()}
+                    onClick={pymentsStore.handleShowModal}
+                  >
+                    Add Pyment
+                  </Button>
+                  <Button
+                    variant={this.style()}
+                    onClick={this.handleShowUpdate}
+                  >
+                    Edit Loan
+                  </Button>
+                </Card.Body>
+              </Card>
+            </button>
+          </Col>
+        </div>
+      );
+    }
   }
 }
 export default observer(LoanCard);

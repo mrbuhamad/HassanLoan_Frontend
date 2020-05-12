@@ -44,6 +44,24 @@ class HoldStore {
     }
   };
 
+  editHold = async (loan_id, data) => {
+    const newHold = {
+      part_hold_amount: Number(data.hold_amount),
+      reasoning: "throu loan",
+      date: data.date,
+      participant: data.participant,
+      loan: loan_id,
+    };
+    const holdobj = this.Hoalds.find((obj) => obj.loan === loan_id);
+    try {
+      const res = await instance.put(`hold/${holdobj.id}/update`, newHold);
+      let index = this.Hoalds.findIndex((obj) => obj.id === holdobj.id);
+      this.Hoalds.splice(index, 1, res.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   handleCloseHold = () => (this.showHoldModal = false);
 
   handleShowHoldAdd = () => {

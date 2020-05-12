@@ -3,8 +3,11 @@ import { instance } from "./instance";
 
 class PaymentsStore {
   showPayments = false;
-  payments = [];
+  showUpdateCard = false;
+  showPymentModal = false;
   loadingPayments = true;
+  payments = [];
+  editLoanobj = {};
 
   fetchPayments = async (loan_id) => {
     try {
@@ -36,12 +39,33 @@ class PaymentsStore {
   handleShow = () => {
     this.showPayments = true;
   };
+
+  handleShowUpdate = (obj) => {
+    this.showUpdateCard = true;
+    this.editLoanId = obj;
+  };
+
+  handlecloseUpdate = () => {
+    this.showUpdateCard = false;
+    this.editLoanId = {};
+  };
+
+  handleShowModal = () => {
+    this.showPymentModal = true;
+  };
+
+  handleCloseModal = () => {
+    this.showPymentModal = false;
+  };
 }
 
 decorate(PaymentsStore, {
   payments: observable,
   loadingPayments: observable,
   showPayments: observable,
+  showUpdateCard: observable,
+  editLoanId: observable,
+  showPymentModal: observable,
 });
 
 const paymentsStore = new PaymentsStore();

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { observer } from "mobx-react";
 
-import { Table, Col, Spinner } from "react-bootstrap";
+import { Table, Spinner } from "react-bootstrap";
 
 //store
 import masterStore from "../../stores/masterStore";

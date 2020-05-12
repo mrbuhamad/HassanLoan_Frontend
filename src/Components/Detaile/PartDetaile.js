@@ -1,15 +1,7 @@
 import React, { Component } from "react";
 import { observer } from "mobx-react";
 
-import {
-  Spinner,
-  Card,
-  Button,
-  Row,
-  Container,
-  Tabs,
-  Tab,
-} from "react-bootstrap";
+import { Card, Button, Row, Container, Tabs, Tab } from "react-bootstrap";
 
 //store
 import masterStore from "../../stores/masterStore";
@@ -19,6 +11,7 @@ import holdStore from "../../stores/holdStore";
 import LoanCard from "./LoanCard";
 import Pyments from "./Pyments";
 import Holds from "../Holds/Holds";
+import PartCard from "../Participants/PartCard";
 
 // Modals
 import LoanModal from "../Modal/LoanModal";
@@ -28,7 +21,6 @@ class PartDetaile extends Component {
   participants = this.props.participants;
   partID = this.props.match.params.partID;
 
-
   componentDidMount() {
     masterStore.fetchLoans(this.partID);
     holdStore.fetchHolds(this.partID);
@@ -36,7 +28,7 @@ class PartDetaile extends Component {
 
   loanCards = () => {
     if (!masterStore.loadingLoans) {
-      return masterStore.Loans.loans.map((loan) => {
+      return masterStore.LoanList.map((loan) => {
         return <LoanCard key={loan.id} loan={loan} />;
       });
     }
@@ -51,7 +43,8 @@ class PartDetaile extends Component {
   };
 
   render() {
-    console.log("part=",masterStore.partObj )
+    // console.log("part=",masterStore.partObj )
+    // console.log("loanobj=",masterStore.LoanObj)
     return (
       <div>
         {/*   modal ---------------- modal  */}
@@ -62,10 +55,9 @@ class PartDetaile extends Component {
 
         <Container>
           <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
-
             {/* ---------------- Home tab------------------ */}
             <Tab eventKey="profile" title="Profile">
-            <Card border="info">
+              <Card border="info">
                 <Card.Header
                   style={{
                     backgroundColor: "#e3f2fd",
@@ -82,13 +74,12 @@ class PartDetaile extends Component {
 
                 <Card.Body>
                   <Row>
-                  {/* <PartCard  participants={this.partObj} key={this.partObj.id}/> */}
+                    <PartCard
+                      participants={masterStore.partObj}
+                      key={masterStore.partObj.id}
+                    />
                   </Row>
                 </Card.Body>
-              </Card>
-
-              <Card border="info">
-                <Pyments />
               </Card>
             </Tab>
 

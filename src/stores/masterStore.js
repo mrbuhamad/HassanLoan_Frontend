@@ -1,13 +1,15 @@
-import { decorate, observable ,computed} from "mobx";
+import { decorate, observable, computed } from "mobx";
 import { instance } from "./instance";
 
 class MasterStore {
   participants = [];
   Loans = [];
-  partObj={}
+  partObj = {};
+  LoanObj = {};
   loadingPart = true;
   loadingLoans = true;
   showLoanModal = false;
+  showeditLoanModal = false;
 
   fetchParticipants = async () => {
     try {
@@ -27,10 +29,11 @@ class MasterStore {
       console.error(err);
     }
   };
-  
-  specifyPart =(id)=>{
-   this.partObj= this.participants.find(obj =>obj.id===id)
-  }
+
+  specifyPart = (id) => {
+    this.partObj = this.participants.find((obj) => obj.id === id);
+    localStorage.setItem("partObj", JSON.stringify(this.partObj));
+  };
 
   fetchLoans = async (part_id) => {
     try {
@@ -43,13 +46,25 @@ class MasterStore {
   };
 
   addLoan = async (data) => {
-    console.log("add loan row data", data);
     try {
       const res = await instance.post("loan/create", data);
       const Loan = res.data;
-      console.log("add loan post post data", Loan);
-
       this.Loans.loans.push(Loan);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  editLoan = async (loan_id, data) => {
+    try {
+      const res = await instance.put(`loan/${loan_id}/update`, data);
+      // let index = this.Loans.loans.findIndex((obj) => obj.id === loan_id);
+      let obj = this.Loans.loans.find((obj) => obj.id === loan_id);
+      const loans = this.Loans.loans.filter((loan) => loan.id !== obj.id);
+      loans.push(res.data);
+      console.log("1", loans);
+      this.Loans.loans = loans;
+      // this.Loans[0].loans.splice(index, 1, res.data);
     } catch (err) {
       console.error(err);
     }
@@ -59,11 +74,27 @@ class MasterStore {
 
   handleShowLoan = () => (this.showLoanModal = true);
 
-   
+  handleCloseEditLoan = () => (this.showeditLoanModal = false);
+
+  handleShowEditLoan = (id) => {
+    this.LoanObj = this.Loans.loans.find((obj) => obj.id === id);
+    this.showeditLoanModal = true;
+  };
+
+  refreshMethod = () => {
+    const partObj = JSON.parse(localStorage.getItem("partObj"));
+    if (partObj) {
+      this.partObj = partObj;
+    }
+  };
+
   get participantsList() {
-    return this.participants.sort((a, b) => b.active_loans - a.active_loans)
+    return this.participants.sort((a, b) => b.active_loans - a.active_loans);
   }
 
+  get LoanList() {
+    return this.Loans.loans.sort((a, b) => b.date - a.date);
+  }
 }
 
 decorate(MasterStore, {
@@ -72,9 +103,13 @@ decorate(MasterStore, {
   Loans: observable,
   loadingLoans: observable,
   showLoanModal: observable,
-  participantsList:computed 
+  showeditLoanModal: observable,
+  LoanObj: observable,
+  participantsList: computed,
+  LoanList: computed,
 });
 
 const masterStore = new MasterStore();
 masterStore.fetchParticipants();
+masterStore.refreshMethod();
 export default masterStore;
