@@ -11,7 +11,7 @@ import holdStore from "../../stores/holdStore";
 import LoanCard from "./LoanCard";
 import Pyments from "./Pyments";
 import Holds from "../Holds/Holds";
-import PartCard from "../Participants/PartCard";
+import DetailProfile from "./DetailProfile";
 
 // Modals
 import LoanModal from "../Modal/LoanModal";
@@ -74,7 +74,7 @@ class PartDetaile extends Component {
 
                 <Card.Body>
                   <Row>
-                    <PartCard
+                    <DetailProfile
                       participants={masterStore.partObj}
                       key={masterStore.partObj.id}
                     />
