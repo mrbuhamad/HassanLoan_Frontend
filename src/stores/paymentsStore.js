@@ -19,6 +19,11 @@ class PaymentsStore {
     }
   };
 
+  clearPayment = () => {
+    this.payments = [];
+    this.loadingPayments = true;
+  };
+
   addPayment = async (data) => {
     try {
       const res = await instance.post("pyments/create", data);

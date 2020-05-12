@@ -74,6 +74,10 @@ class LoanCard extends Component {
     pymentsStore.handleShowUpdate(this.loan);
   };
 
+  componentWillUnmount() {
+    pymentsStore.clearPayment();
+  }
+
   render() {
     if (masterStore.loadingLoans) {
       return <Spinner animation="border" variant="primary" size="l" />;
@@ -91,7 +95,6 @@ class LoanCard extends Component {
       return (
         <div>
           {/*   modal ---------------- modal  */}
-          {/* <PymentModal loan={this.loan} /> */}
           <PymentModal setprogress={this.setprogress} loan={this.loan} />
           {/*   modal ---------------- modal  */}
 
