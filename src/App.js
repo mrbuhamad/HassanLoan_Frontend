@@ -8,6 +8,7 @@ import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import Navbar from "./Components/Webnavbar";
 import PartList from "./Components/Participants/PartList";
 import PartDetaile from "./Components/Detaile/PartDetaile";
+import ActiveLoan from "./Components/Detaile/ActiveLoan";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <Switch>
         <Redirect exact from="/" to="/participants/" />
         <Route path="/participants/" component={PartList} />
+        <Route path="/ActiveLoans/" component={ActiveLoan} />
         <Route path="/Loans/:partID/" component={PartDetaile} />
       </Switch>
     </>

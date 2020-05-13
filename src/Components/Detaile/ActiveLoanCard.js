@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { observer } from "mobx-react";
-
-import { Col, Spinner, Card, ProgressBar, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import { Col, Spinner, Card, ProgressBar } from "react-bootstrap";
 
 //store
 import masterStore from "../../stores/masterStore";
@@ -10,28 +10,17 @@ import loanStore from "../../stores/loanStore";
 
 // component
 import UpdateLoanCard from "./UpdateLoanCard";
-import PymentModal from "../Modal/PymentModal";
 
 import style from "../style";
 
-class LoanCard extends Component {
+class ActiveLoanCard extends Component {
   state = {
-    show: false,
     prograss:
       (this.props.loan.paid_amount / this.props.loan.totla_loan_amount) * 100,
   };
 
   participants = masterStore.partObj;
   loan = this.props.loan;
-
-  handleClose = () => this.setState({ show: false });
-
-  handleShowModal = () => this.setState({ show: true });
-
-  handleShow = () => {
-    pymentsStore.fetchPayments(this.loan.id);
-    pymentsStore.handleShow();
-  };
 
   setprogress = (prograss) =>
     this.setState({
@@ -70,17 +59,9 @@ class LoanCard extends Component {
       return "#FADBD8";
     }
   };
-  handleShowUpdate = () => {
-    masterStore.specifyPart(this.participants.id);
-    pymentsStore.handleShowUpdate(this.loan);
-  };
-
-  componentWillUnmount() {
-    pymentsStore.clearPayment();
-  }
 
   render() {
-    if (masterStore.loadingLoans && loanStore.loandignActiv) {
+    if (masterStore.loadingPart || loanStore.loandignActiv) {
       return <Spinner animation="border" variant="primary" size="l" />;
     } else if (
       pymentsStore.showUpdateCard &&
@@ -93,16 +74,19 @@ class LoanCard extends Component {
         />
       );
     } else {
+      const partobj = masterStore.participants.find((part) => {
+        if (part.id === this.loan.participant) {
+          return true;
+        }
+      });
+
       return (
         <div>
-          {/*   modal ---------------- modal  */}
-          <PymentModal setprogress={this.setprogress} loan={this.loan} />
-          {/*   modal ---------------- modal  */}
-
           <Col>
-            <button
-              onClick={this.handleShow}
-              style={{ padding: 0, border: "none", background: "none" }}
+            <Link
+              to={`/Loans/${partobj.id}/`}
+              style={{ textDecoration: "none" }}
+              onClick={this.fetchdata}
             >
               <Card
                 border={this.style()}
@@ -111,6 +95,7 @@ class LoanCard extends Component {
                 style={style.activPart}
               >
                 <Card.Header style={{ backgroundColor: this.styleHeader() }}>
+                  <h4> {partobj.name}</h4>
                   <h5>
                     Loan # 0{this.loan.id} {" -- "}({this.loan.loan_amount} KD)
                   </h5>
@@ -136,26 +121,13 @@ class LoanCard extends Component {
                   <Card.Text>paid_amount {this.loan.paid_amount} KD</Card.Text>
 
                   <Card.Text>{this.getstatus()} </Card.Text>
-
-                  <Button
-                    variant={this.style()}
-                    onClick={pymentsStore.handleShowModal}
-                  >
-                    Add Pyment
-                  </Button>
-                  <Button
-                    variant={this.style()}
-                    onClick={this.handleShowUpdate}
-                  >
-                    Edit Loan
-                  </Button>
                 </Card.Body>
               </Card>
-            </button>
+            </Link>
           </Col>
         </div>
       );
     }
   }
 }
-export default observer(LoanCard);
+export default observer(ActiveLoanCard);

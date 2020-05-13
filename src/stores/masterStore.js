@@ -3,6 +3,7 @@ import { instance } from "./instance";
 
 class MasterStore {
   participants = [];
+  filteredPart = [];
   Loans = [];
   partObj = {};
   LoanObj = {};
@@ -20,11 +21,13 @@ class MasterStore {
       console.error(err);
     }
   };
+
   addParticipants = async (data) => {
     try {
       const res = await instance.post("participants/create/", data);
       const participant = res.data;
       this.participants.push(participant);
+      localStorage.setItem("partlist", JSON.stringify(this.participants));
     } catch (err) {
       console.error(err);
     }
@@ -33,6 +36,16 @@ class MasterStore {
   specifyPart = (id) => {
     this.partObj = this.participants.find((obj) => obj.id === id);
     localStorage.setItem("partObj", JSON.stringify(this.partObj));
+  };
+
+  filterPart = (query) => {
+    this.filteredPart = this.participants;
+    const filteredPart = this.participants.filter((part) => {
+      return part.name.toLowerCase().includes(query.toLowerCase());
+    });
+
+    filteredPart.sort((a, b) => b.active_loans - a.active_loans);
+    this.filteredPart = filteredPart;
   };
 
   fetchLoans = async (part_id) => {
@@ -58,13 +71,10 @@ class MasterStore {
   editLoan = async (loan_id, data) => {
     try {
       const res = await instance.put(`loan/${loan_id}/update`, data);
-      // let index = this.Loans.loans.findIndex((obj) => obj.id === loan_id);
       let obj = this.Loans.loans.find((obj) => obj.id === loan_id);
       const loans = this.Loans.loans.filter((loan) => loan.id !== obj.id);
       loans.push(res.data);
-      console.log("1", loans);
       this.Loans.loans = loans;
-      // this.Loans[0].loans.splice(index, 1, res.data);
     } catch (err) {
       console.error(err);
     }
@@ -83,13 +93,18 @@ class MasterStore {
 
   refreshMethod = () => {
     const partObj = JSON.parse(localStorage.getItem("partObj"));
-    if (partObj) {
+    const partlist = JSON.parse(localStorage.getItem("partlist"));
+    if (partObj && partlist) {
       this.partObj = partObj;
+      this.participants = partlist;
     }
   };
-
-  get participantsList() {
-    return this.participants.sort((a, b) => b.active_loans - a.active_loans);
+  get PartList() {
+    if (this.filteredPart.length === 0) {
+      return this.participants;
+    } else {
+      return this.filteredPart;
+    }
   }
 
   get LoanList() {
@@ -105,7 +120,8 @@ decorate(MasterStore, {
   showLoanModal: observable,
   showeditLoanModal: observable,
   LoanObj: observable,
-  participantsList: computed,
+  filteredPart: observable,
+  PartList: computed,
   LoanList: computed,
 });
 
