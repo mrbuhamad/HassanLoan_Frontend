@@ -24,6 +24,9 @@ class HoldModaal extends Component {
   };
 
   handleSubmit = () => {
+    if (holdStore.reasoning === "capital withdraw") {
+      this.setState({ part_hold_amount: -this.state.part_hold_amount });
+    }
     let holdObj = {
       participant: this.partID,
       part_hold_amount: this.state.part_hold_amount,
