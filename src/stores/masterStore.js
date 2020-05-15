@@ -101,7 +101,7 @@ class MasterStore {
   };
   get PartList() {
     if (this.filteredPart.length === 0) {
-      return this.participants;
+      return this.participants.sort((a, b) => b.active_loans - a.active_loans);
     } else {
       return this.filteredPart;
     }
