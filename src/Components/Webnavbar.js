@@ -15,7 +15,16 @@ function Webnavbar() {
       <Navbar variant="dark" style={style}>
         <Navbar.Brand href="#home">Navbar</Navbar.Brand>
         <Nav className="mr-auto">
-          <Nav.Link href="#home">Home</Nav.Link>
+          <Nav.Link>
+            <NavLink
+              style={{ color: "gray" }}
+              activeStyle={{ fontWeight: "bold", color: "white" }}
+              to="/home/"
+            >
+              Home
+            </NavLink>
+          </Nav.Link>
+
           <Nav.Link>
             <NavLink
               style={{ color: "gray" }}

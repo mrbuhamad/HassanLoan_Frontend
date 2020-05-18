@@ -4,13 +4,25 @@ import { instance } from "./instance";
 class MasterStore {
   participants = [];
   filteredPart = [];
+  cashflow = [];
   Loans = [];
   partObj = {};
   LoanObj = {};
+  loadingcashflow = true;
   loadingPart = true;
   loadingLoans = true;
   showLoanModal = false;
   showeditLoanModal = false;
+
+  fetchCashFlow = async () => {
+    try {
+      const res = await instance.get("cashFlow/");
+      this.cashflow = res.data;
+      this.loadingcashflow = false;
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   fetchParticipants = async () => {
     try {
@@ -123,9 +135,12 @@ decorate(MasterStore, {
   filteredPart: observable,
   PartList: computed,
   LoanList: computed,
+  cashflow: observable,
+  loadingcashflow: observable,
 });
 
 const masterStore = new MasterStore();
+masterStore.fetchCashFlow();
 masterStore.fetchParticipants();
 masterStore.refreshMethod();
 export default masterStore;

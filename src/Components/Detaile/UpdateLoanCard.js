@@ -1,15 +1,7 @@
 import React, { Component } from "react";
 import { observer } from "mobx-react";
 
-import {
-  Button,
-  Row,
-  Col,
-  Form,
-  FormControl,
-  Card,
-  ProgressBar,
-} from "react-bootstrap";
+import { Button, Row, Col, Form, FormControl, Card } from "react-bootstrap";
 
 //store
 import masterStore from "../../stores/masterStore";

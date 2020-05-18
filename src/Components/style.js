@@ -1,23 +1,30 @@
-
-
-const styles ={
-activPart:{
+const styles = {
+  activPart: {
     width: "18rem",
-    marginTop:"2rem",
-  
-},
+    marginTop: "2rem",
+  },
 
-errorPart:{
+  errorPart: {
     width: "18rem",
     color: "#E74C3C ",
- 
-}
+  },
 
-}
+  table: {
+    textAlign: "center",
+  },
+
+  Balance: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    textAlign: "center",
+    marginBottom: 30,
+    marginTop: 30,
+    backgroundColor: "#DCDCDC",
+  },
+};
 
 export default styles;
-
-
 
 //   container: {
 //     flex: 1,

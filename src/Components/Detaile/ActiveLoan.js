@@ -1,14 +1,7 @@
 import React, { Component } from "react";
 import { observer } from "mobx-react";
 
-import {
-  Container,
-  Spinner,
-  Row,
-  Button,
-  Modal,
-  FormControl,
-} from "react-bootstrap";
+import { Container, Spinner, Row, Button } from "react-bootstrap";
 
 //store
 import loanStore from "../../stores/loanStore";
@@ -17,24 +10,6 @@ import loanStore from "../../stores/loanStore";
 import ActiveLoanCard from "../Detaile/ActiveLoanCard";
 
 class ActiveLoan extends Component {
-  state = {
-    show: false,
-    name: "",
-  };
-
-  //   handleClose = () => this.setState({ show: false });
-
-  //   handleShow = () => this.setState({ show: true });
-
-  //   handleChange = (event) => {
-  //     this.setState({ name: event.target.value });
-  //   };
-  //   handleSubmit = () => {
-  //     let nameItem = { name: this.state.name };
-  //     masterStore.addParticipants(nameItem);
-  //     this.handleClose();
-  //   };
-
   loanCards = () => {
     if (!loanStore.loandignActiv) {
       return loanStore.activLoans.map((loan) => {
@@ -49,10 +24,6 @@ class ActiveLoan extends Component {
     } else {
       return (
         <div>
-          {/*   modal ---------------- modal  */}
-
-          {/*   modal ---------------- modal  */}
-
           <Container fluid>
             <Button variant="primary" onClick={this.handleShow}>
               Add Loan{" "}

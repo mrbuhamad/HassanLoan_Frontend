@@ -9,13 +9,15 @@ import Navbar from "./Components/Webnavbar";
 import PartList from "./Components/Participants/PartList";
 import PartDetaile from "./Components/Detaile/PartDetaile";
 import ActiveLoan from "./Components/Detaile/ActiveLoan";
+import Home from "./Components/Home/Home";
 
 function App() {
   return (
     <>
       <Navbar />
       <Switch>
-        <Redirect exact from="/" to="/participants/" />
+        <Redirect exact from="/" to="/home/" />
+        <Route path="/home/" component={Home} />
         <Route path="/participants/" component={PartList} />
         <Route path="/ActiveLoans/" component={ActiveLoan} />
         <Route path="/Loans/:partID/" component={PartDetaile} />

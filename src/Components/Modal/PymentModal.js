@@ -4,7 +4,6 @@ import { observer } from "mobx-react";
 import { Modal, Button, FormControl, Form, Row, Col } from "react-bootstrap";
 
 //store
-import holdStore from "../../stores/holdStore";
 import pymentsStore from "../../stores/paymentsStore";
 
 class PymentModal extends Component {
