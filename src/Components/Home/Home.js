@@ -8,6 +8,7 @@ import masterStore from "../../stores/masterStore";
 
 // Components
 import CashFlowCard from "./CashFlowCard";
+import PieChart from "./PieChart";
 
 // style
 import style from "../style";
@@ -17,19 +18,28 @@ class Home extends Component {
     if (masterStore.loadingcashflow) {
       return <Spinner animation="border" variant="primary" size="l" />;
     } else {
-      const cashflow = masterStore.cashflow.map((item, index) => {
+      const cashflow = masterStore.cashflow.Cash_flow.map((item, index) => {
         return <CashFlowCard item={item} index={index} />;
       });
-      const lastarray = masterStore.cashflow[masterStore.cashflow.length - 1];
+      const summery = masterStore.cashflow;
+      const bankBalance = summery.Banck_Balance;
+      const Assets = summery.Total_Hold;
 
       return (
         <Container>
           <Container style={style.Balance}>
             <h4>
               Current Banck balance :{" "}
-              <Badge variant="secondary"> {lastarray.balance} KD</Badge>
+              <Badge variant="secondary"> {bankBalance} KD</Badge>
+            </h4>
+            <h4>
+              Total Assets : <Badge variant="secondary"> {Assets} KD</Badge>
             </h4>
           </Container>
+          <Container>
+            <PieChart />
+          </Container>
+
           <Container fluid>
             <Table responsive bordered size="sm" style={style.table}>
               <thead>
