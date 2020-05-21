@@ -93,6 +93,10 @@ class LoanCard extends Component {
         />
       );
     } else {
+      const handleShowPymentModal = () => {
+        masterStore.specifyloan(this.loan.id);
+        pymentsStore.handleShowModal();
+      };
       return (
         <div>
           {/*   modal ---------------- modal  */}
@@ -139,7 +143,7 @@ class LoanCard extends Component {
 
                   <Button
                     variant={this.style()}
-                    onClick={pymentsStore.handleShowModal}
+                    onClick={handleShowPymentModal}
                   >
                     Add Pyment
                   </Button>

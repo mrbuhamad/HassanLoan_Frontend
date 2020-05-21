@@ -111,6 +111,11 @@ class MasterStore {
       this.participants = partlist;
     }
   };
+
+  specifyloan = (id) => {
+    this.LoanObj = this.Loans.loans.find((obj) => obj.id === id);
+  };
+
   get PartList() {
     if (this.filteredPart.length === 0) {
       return this.participants.sort((a, b) => b.active_loans - a.active_loans);

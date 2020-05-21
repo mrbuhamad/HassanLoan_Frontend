@@ -25,6 +25,7 @@ class PaymentsStore {
   };
 
   addPayment = async (data) => {
+    console.log("pyment data", data);
     try {
       const res = await instance.post("pyments/create", data);
       this.payments.push(res.data);

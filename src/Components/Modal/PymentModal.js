@@ -5,6 +5,7 @@ import { Modal, Button, FormControl, Form, Row, Col } from "react-bootstrap";
 
 //store
 import pymentsStore from "../../stores/paymentsStore";
+import masterStore from "../../stores/masterStore";
 
 class PymentModal extends Component {
   state = {
@@ -12,7 +13,7 @@ class PymentModal extends Component {
     date: "",
   };
 
-  loan = this.props.loan;
+  loan = masterStore.LoanObj;
 
   handleChangeamount = (event) => {
     this.setState({ pyment: event.target.value });
@@ -24,16 +25,16 @@ class PymentModal extends Component {
 
   addPayment = () => {
     const pyment = {
-      loan: this.loan.id,
+      loan: masterStore.LoanObj.id,
       pyment: this.state.pyment,
       date: this.state.date,
     };
     pymentsStore.addPayment(pyment);
     let newPaidAmount =
-      Number(this.props.loan.paid_amount) + Number(this.state.pyment);
+      Number(masterStore.LoanObj.paid_amount) + Number(this.state.pyment);
 
     this.props.setprogress(
-      (newPaidAmount / this.props.loan.totla_loan_amount) * 100
+      (newPaidAmount / masterStore.LoanObj.totla_loan_amount) * 100
     );
 
     pymentsStore.handleCloseModal();
