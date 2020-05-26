@@ -51,8 +51,6 @@ class PartList extends Component {
             </Modal.Header>
             <Modal.Body>
               <FormControl
-                as="textarea"
-                aria-label="With textarea"
                 type="text"
                 name="Participants Name"
                 value={this.state.name}
